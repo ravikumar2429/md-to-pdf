@@ -28,80 +28,10 @@ app.post('/generatePdf', async (req, res) => {
         return res.status(400).json({ error: 'Markdown content is required' });
     }
 
-    // Markdown to HTML
-    const md = new markdownIt({ html: true, linkify: true, typographer: true });
-    const htmlContent = md.render(markdown);
+  
 
-    // HTML Template with styling
-    const headerHTML = `
-        <div style="text-align: center; margin-bottom: 20px;">
-            <img src=${logo} alt="Header Image" width="300" height="60" />
-        </div>
-        <hr/>
-    `;
-
-    const fullHtml = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Markdown PDF</title>
-       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Color+Emoji&display=swap');
-
-        body {
-            font-family: 'Noto Sans', 'Noto Color Emoji', sans-serif;
-            margin: 40px;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        h1, h2, h3 {
-            color: #111;
-        }
-
-        img {
-            max-width: 100%;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-
-        th, td {
-            padding: 8px 12px;
-            text-align: left;
-        }
-
-        p, li {
-            font-size: 14px;
-        }
-
-        hr {
-            margin: 20px 0;
-            border: none;
-            border-top: 1px solid #eee;
-        }
-
-        /* Ensure consistent margins across pages */
-        @page {
-            margin: 40px;
-        }
-    </style>
-    </head>
-    <body>
-        ${headerHTML}
-        ${htmlContent}
-    </body>
-    </html>
-    `;
-
+    const fullHtml = `markdown
+   
     try {
         // Launch puppeteer using chrome-aws-lambda
         const browser = await puppeteer.launch({
